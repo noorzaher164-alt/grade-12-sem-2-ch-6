@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوحدة السادسة: المحتوى الحراري وقانون هس</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0a0a;
+    --l1: #ff8a65;
+    --l2: #64b5f6;
+    --l3: #a5d6a7;
+    --gold: #ffd54f;
+    --card: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Cairo', sans-serif;
+    color: #ede8e8;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(255,138,101,0.09) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 75%, rgba(100,181,246,0.09) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(255,213,79,0.04) 0%, transparent 55%);
+  }
+
+  header {
+    text-align: center;
+    padding: 44px 20px 18px;
+  }
+  .school-tag {
+    display: inline-block;
+    background: rgba(255,213,79,0.1);
+    border: 1px solid rgba(255,213,79,0.28);
+    color: var(--gold);
+    font-size: .78rem; padding: 4px 16px;
+    border-radius: 20px; margin-bottom: 14px;
+    font-family: 'Tajawal', sans-serif;
+  }
+  header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff8a65, #ffcc02, #ffe082);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  header p { color: rgba(237,232,232,.45); font-size: .9rem; font-family: 'Tajawal', sans-serif; }
+
+  /* stats */
+  .stats {
+    display: flex; justify-content: center;
+    gap: 12px; flex-wrap: wrap;
+    padding: 20px 20px 8px;
+    max-width: 1300px; margin: 0 auto;
+  }
+  .stat {
+    background: rgba(255,213,79,.06);
+    border: 1px solid rgba(255,213,79,.2);
+    border-radius: 14px; padding: 12px 20px;
+    text-align: center; min-width: 128px;
+    animation: fadeUp .5s ease both;
+  }
+  .stat:nth-child(1){animation-delay:.05s}
+  .stat:nth-child(2){animation-delay:.15s}
+  .stat:nth-child(3){animation-delay:.25s}
+  .stat:nth-child(4){animation-delay:.35s}
+  .stat .n { font-size: 1.55rem; font-weight: 900; color: var(--gold); }
+  .stat .l { font-size: .74rem; color: rgba(237,232,232,.45); font-family:'Tajawal',sans-serif; }
+
+  .divider { text-align: center; padding: 14px 0 10px; color: rgba(237,232,232,.14); font-size:.8rem; letter-spacing:2px; }
+
+  /* legend */
+  .legend {
+    display: flex; justify-content: center;
+    gap: 22px; flex-wrap: wrap;
+    padding: 0 20px 18px;
+    max-width: 1300px; margin: 0 auto;
+  }
+  .leg { display:flex; align-items:center; gap:8px; font-size:.83rem; color:rgba(237,232,232,.5); font-family:'Tajawal',sans-serif; }
+  .ldot { width:12px; height:12px; border-radius:3px; }
+
+  /* grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+    max-width: 1300px; margin: 0 auto;
+    padding: 0 20px 70px;
+  }
+
+  /* lesson card */
+  .lesson {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px; overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+    animation: fadeUp .6s ease both;
+  }
+  .lesson:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(0,0,0,.5); }
+  .lesson:nth-child(1){animation-delay:.1s}
+  .lesson:nth-child(2){animation-delay:.25s}
+  .lesson:nth-child(3){animation-delay:.4s}
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(28px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .lesson-hd {
+    padding: 22px 22px 16px;
+    border-bottom-width: 2px; border-bottom-style: solid;
+  }
+  .l1 .lesson-hd { background: linear-gradient(135deg,#bf360c,#e64a19); border-bottom-color: var(--l1); }
+  .l2 .lesson-hd { background: linear-gradient(135deg,#0d2b5e,#1565c0); border-bottom-color: var(--l2); }
+  .l3 .lesson-hd { background: linear-gradient(135deg,#1b5e20,#2e7d32); border-bottom-color: var(--l3); }
+
+  .lesson-num { font-size:.74rem; font-weight:600; letter-spacing:2px; opacity:.7; margin-bottom:5px; font-family:'Tajawal',sans-serif; }
+  .l1 .lesson-num { color:var(--l1); }
+  .l2 .lesson-num { color:var(--l2); }
+  .l3 .lesson-num { color:var(--l3); }
+  .lesson-title { font-size:1.2rem; font-weight:700; line-height:1.35; }
+
+  .lesson-body { padding: 16px 20px 22px; }
+
+  /* branch */
+  .branch { margin-bottom: 12px; }
+  .btoggle {
+    display:flex; align-items:center; gap:10px;
+    cursor:pointer; padding:10px 14px;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.07);
+    transition:background .2s, border-color .2s;
+    width:100%; text-align:right; user-select:none;
+  }
+  .btoggle:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); }
+
+  .bicon {
+    width:32px; height:32px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; flex-shrink:0;
+  }
+  .l1 .bicon { background:rgba(255,138,101,.15); color:var(--l1); }
+  .l2 .bicon { background:rgba(100,181,246,.15); color:var(--l2); }
+  .l3 .bicon { background:rgba(165,214,167,.15); color:var(--l3); }
+
+  .blabel { flex:1; font-size:.93rem; font-weight:600; }
+  .chev { font-size:.68rem; transition:transform .3s; opacity:.45; }
+  .branch.open .chev { transform:rotate(180deg); }
+
+  .bcontent { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .branch.open .bcontent { max-height:700px; }
+
+  ul.leaves { padding:10px 14px 4px; list-style:none; }
+  ul.leaves li {
+    padding:6px 10px 6px 0;
+    border-right:2px solid rgba(255,255,255,.07);
+    font-size:.87rem;
+    color:rgba(237,232,232,.82);
+    line-height:1.55;
+    font-family:'Tajawal',sans-serif;
+  }
+  ul.leaves li::before { content:'◈'; margin-left:8px; font-size:.62rem; opacity:.4; }
+
+  .chip {
+    display:inline-block;
+    background:rgba(255,213,79,.1);
+    border:1px solid rgba(255,213,79,.25);
+    color:#ffe082; font-size:.78rem;
+    padding:2px 8px; border-radius:6px;
+    font-family:'Tajawal',monospace; margin:2px 0;
+  }
+  .chip-b { background:rgba(100,181,246,.1); border-color:rgba(100,181,246,.25); color:#90caf9; }
+  .chip-g { background:rgba(165,214,167,.1); border-color:rgba(165,214,167,.25); color:#a5d6a7; }
+  .chip-r { background:rgba(255,138,101,.1); border-color:rgba(255,138,101,.25); color:#ffab91; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="school-tag">مدرسة الإيمان الثانوية للبنات • الصف الثاني عشر</div>
+  <h1>🔥 الوحدة السادسة: حساب التغيرات في المحتوى الحراري باستخدام قانون هس</h1>
+  <p>اضغط على أي فرع لعرض التفاصيل</p>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="n">2</div><div class="l">درسان رئيسيان</div></div>
+  <div class="stat"><div class="n" style="font-size:1.1rem">Q=mcΔT</div><div class="l">قانون الحرارة</div></div>
+  <div class="stat"><div class="n">ΔH</div><div class="l">المحتوى الحراري</div></div>
+  <div class="stat"><div class="n">هس</div><div class="l">قانون الجمع</div></div>
+</div>
+
+<div class="divider">── ── ──</div>
+
+<div class="legend">
+  <div class="leg"><div class="ldot" style="background:var(--l1)"></div>الدرس الأول — المحتوى الحراري</div>
+  <div class="leg"><div class="ldot" style="background:var(--l2)"></div>قانون هس</div>
+  <div class="leg"><div class="ldot" style="background:var(--l3)"></div>الحسابات التطبيقية</div>
+</div>
+
+<div class="grid">
+
+  <!-- ══════════════ LESSON 1 ══════════════ -->
+  <div class="lesson l1">
+    <div class="lesson-hd">
+      <div class="lesson-num">الدرس الأول</div>
+      <div class="lesson-title">المحتوى الحراري والمسعر الحراري</div>
+    </div>
+    <div class="lesson-body">
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🧪</div>
+          <span class="blabel">المسعر الحراري Calorimeter</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>جهاز لقياس الطاقة الناتجة عن احتراق مادة معينة</li>
+          <li><strong>مكوناته:</strong> وعاء معزول + ترمومتر + محرك + وعاء التفاعل</li>
+          <li>يحتوي على النظام (المواد) والوسط المحيط (الماء + وعاء التفاعل)</li>
+          <li><span class="chip-r chip">Q_reaction + Q_water = 0</span> — الطاقة الكلية = صفر</li>
+          <li>الطاقة المكتسبة = كمية الطاقة المنطلقة</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🌡️</div>
+          <span class="blabel">قانون الحرارة Q = m × c × ΔT</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><span class="chip">Q = m × c × ΔT</span></li>
+          <li><strong>m</strong> — الكتلة بالغرام (g) أو الكيلوغرام (kg)</li>
+          <li><strong>c</strong> — الحرارة النوعية (J/g·°C) أو (kJ/kg·°C)</li>
+          <li><strong>ΔT = T₂ − T₁</strong> — التغير في درجة الحرارة</li>
+          <li>Q موجبة (+) → امتصاص حرارة | Q سالبة (−) → فقد حرارة</li>
+          <li>تحويل: <span class="chip">Q_kJ = Q_J ÷ 1000</span> | <span class="chip">Q_cal = Q_J ÷ 4184</span></li>
+          <li>c للماء = 4.184 J/g·°C | 1 kg = 1000 g</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🔥</div>
+          <span class="blabel">المحتوى الحراري H وأنواع التفاعلات</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>H = مقدار الطاقة الكيميائية المخزنة في المادة عند تكوينها</li>
+          <li><span class="chip">ΔH = ΔU + PΔV</span> — القانون العام للمحتوى الحراري</li>
+          <li>في المسعر التفجيري: حجم ثابت → ΔH = ΔU</li>
+          <li><strong>تفاعل طارد (Exothermic):</strong> ΔH سالبة (−) | يُطلق حرارة للوسط → T↑ | النواتج أقل طاقة</li>
+          <li><strong>تفاعل ماص (Endothermic):</strong> ΔH موجبة (+) | يمتص حرارة من الوسط → T↓ | المتفاعلات أقل طاقة</li>
+          <li>العوامل المؤثرة في ΔH: ΔT — الحالة الفيزيائية — الضغط — الحجم</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">💧</div>
+          <span class="blabel">التحولات الطورية وعلاقتها بـ ΔH</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><strong>صلب → سائل (انصهار):</strong> ΔH = + (ماص للحرارة)</li>
+          <li><strong>سائل → صلب (تجمد):</strong> ΔH = − (طارد للحرارة)</li>
+          <li><strong>سائل → غاز (تبخر):</strong> ΔH = + (ماص للحرارة)</li>
+          <li><strong>غاز → سائل (تكثف):</strong> ΔH = − (طارد للحرارة)</li>
+          <li><strong>صلب → غاز (تسامي):</strong> ΔH = + (ماص للحرارة)</li>
+          <li><strong>غاز → صلب (ترسب):</strong> ΔH = − (طارد للحرارة)</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">⚗️</div>
+          <span class="blabel">الحالة القياسية وحرارة الاحتراق القياسية ΔH°c</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><strong>الحالة القياسية:</strong> ضغط 1 atm — تركيز 1 M — درجة حرارة 25°C (298 K)</li>
+          <li>يُرمز للمحتوى الحراري في الحالة القياسية بـ ΔH°</li>
+          <li><strong>ΔH°c (حرارة الاحتراق القياسية):</strong> كمية الحرارة المنطلقة عند احتراق 1 مول كاملاً بوجود O₂ الكافي</li>
+          <li>شروطها: ① احتراق تام ② 1 مول من المادة ③ ناتج CO₂ غاز ④ ΔH° < 0 دائماً</li>
+          <li>كربون: −393.5 kJ/mol | ميثان: −890.8 kJ/mol | إيثانول: −1366.8 kJ/mol</li>
+          <li>⚠️ إذا تكوّن CO بدل CO₂ أو احترق أكثر من مول → ليست حرارة احتراق قياسية</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🏗️</div>
+          <span class="blabel">حرارة التكوين القياسية ΔH°f</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>التغير في المحتوى الحراري عند تكوّن 1 مول من المادة من عناصرها الأولية في الحالة القياسية</li>
+          <li><strong>شروطها:</strong> ① إنتاج 1 مول فقط ② مادة ناتجة واحدة فقط ③ المتفاعلات عناصر في حالتها القياسية</li>
+          <li>④ يمكن أن تكون طاردة أو ماصة — معظمها طاردة</li>
+          <li>ΔH°f = صفر للعناصر في حالتها القياسية: O₂, H₂, N₂, C(s), S(s)</li>
+          <li>مثال: H₂(g) + ½O₂(g) → H₂O(l) — ΔH°f = −285.8 kJ/mol</li>
+          <li>C(s) + O₂(g) → CO₂(g) — ΔH°f = −393.5 kJ/mol</li>
+        </ul></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════ LESSON 2 ══════════════ -->
+  <div class="lesson l2">
+    <div class="lesson-hd">
+      <div class="lesson-num">الدرس الثاني</div>
+      <div class="lesson-title">قانون هس — Hess's Law</div>
+    </div>
+    <div class="lesson-body">
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">📜</div>
+          <span class="blabel">نص قانون هس وأهميته</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>التغير الكلي في المحتوى الحراري لأي تفاعل = ثابت بغض النظر عن عدد الخطوات</li>
+          <li>الـ ΔH لا يعتمد على مسار التفاعل — مستقل عنه تماماً</li>
+          <li>مبني على قانون حفظ الطاقة: الطاقة لا تُفنى ولا تُستحدث بل تتحول من صورة لأخرى</li>
+          <li>يُستخدم لحساب ΔH لتفاعلات يصعب قياسها مباشرةً</li>
+          <li>⚠️ أي تغيير يحدث للتفاعل يؤثر على ΔH</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🔀</div>
+          <span class="blabel">قواعد التعامل مع المعادلات الوسيطة</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><strong>① عكس المعادلة:</strong> اقلب إشارة ΔH (+ تصبح − والعكس)</li>
+          <li><strong>② ضرب المعادلة في عدد:</strong> اضرب ΔH في نفس العدد</li>
+          <li><strong>③ قسمة المعادلة:</strong> اقسم ΔH على نفس العدد</li>
+          <li><strong>④ جمع المعادلات:</strong> اجمع كل قيم ΔH معاً</li>
+          <li>المواد التي تظهر في طرفي المعادلة تُحذف (تُلغى)</li>
+          <li>تأكد دائماً أن المعادلة النهائية = المطلوبة تماماً</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🔁</div>
+          <span class="blabel">دورة هس — Hess Cycle</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>طريقة بيانية بديلة لتطبيق قانون هس</li>
+          <li>تعتمد على حرارات التكوين القياسية ΔH°f</li>
+          <li><span class="chip chip-b">ΔHc = ΔH₂ − ΔH₁</span></li>
+          <li>ΔH₁ = مجموع حرارات تكوين المتفاعلات (من العناصر إلى المتفاعلات)</li>
+          <li>ΔH₂ = مجموع حرارات تكوين النواتج (من العناصر إلى النواتج)</li>
+          <li>الرسم: المتفاعلات ← العناصر الأولية → النواتج</li>
+          <li>اتجاه السهم الصعودي = ΔH موجب (قسيم) | النازل = ΔH سالب</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🧮</div>
+          <span class="blabel">حساب ΔH°r من حرارات التكوين</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><span class="chip">ΔH°r = Σ[n × ΔH°f (products)] − Σ[m × ΔH°f (reactants)]</span></li>
+          <li>n = معامل النواتج في المعادلة الموزونة</li>
+          <li>m = معامل المتفاعلات في المعادلة الموزونة</li>
+          <li>ΔH°f للعناصر الأولية = صفر (O₂, H₂, N₂, C, S ...)</li>
+          <li>الوحدة النهائية: kJ/mol</li>
+          <li>إذا طُلب ΔH لكمية معينة (g): احسب n = m/mm ثم ΔH_total = n × ΔH°r</li>
+        </ul></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════ LESSON 3 (Applications) ══════════════ -->
+  <div class="lesson l3">
+    <div class="lesson-hd">
+      <div class="lesson-num">تطبيقات وحسابات</div>
+      <div class="lesson-title">أنواع المسائل وخطوات الحل</div>
+    </div>
+    <div class="lesson-body">
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🔢</div>
+          <span class="blabel">مسائل Q = mcΔT — خطوات الحل</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><strong>النوع A — إيجاد ΔT أو c:</strong> عوّض مباشرة في Q = mcΔT</li>
+          <li><strong>النوع B — جسمان يتبادلان الحرارة:</strong> Q_ساخن = −Q_بارد أي m₁c₁ΔT₁ = −m₂c₂ΔT₂</li>
+          <li>تذكر: m بالـ kg → c بالـ kJ/kg·°C | m بالـ g → c بالـ J/g·°C</li>
+          <li>ΔT = T₂ − T₁ | T(K) = T(°C) + 273</li>
+          <li>مثال: فولاذ 100g اكتسب 93100J → ΔT = 93100 / (0.1 × 470) = 1980.85°C</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">⚖️</div>
+          <span class="blabel">مسائل قانون هس — الخطوات</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>① اكتب المعادلة المطلوبة</li>
+          <li>② حدد المواد التي تظهر كمتفاعلات أو نواتج في المعادلة المطلوبة</li>
+          <li>③ رتّب المعادلات الوسيطة (عكس / ضرب / قسمة) بحيث تنتج المعادلة المطلوبة</li>
+          <li>④ اجمع قيم ΔH بعد تعديلها</li>
+          <li>⑤ تحقق: المواد التي تلغت صحيحة؟ المعادلة النهائية صحيحة؟</li>
+          <li>⚠️ لا تنسَ: عكس المعادلة = اقلب إشارة ΔH | ضرب في 2 = ΔH × 2</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">🏭</div>
+          <span class="blabel">مسائل ΔH°r من حرارات التكوين</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>① ابحث عن ΔH°f لكل مادة في الجدول</li>
+          <li>② ΔH°r = Σ[n × ΔH°f (نواتج)] − Σ[m × ΔH°f (متفاعلات)]</li>
+          <li>③ إذا أُعطيت كتلة: n = m(g) ÷ mm(g/mol) ثم ΔH = n × ΔH°r</li>
+          <li>مثال إيثان: ΔH°r للاحتراق = [4(−393.5)+6(−241.8)] − [2(−83.8)+7(0)] = −2857.2 kJ</li>
+          <li>ΔH°c للإيثان = −2857.2 ÷ 2 = −1428.6 kJ/mol</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">📝</div>
+          <span class="blabel">كتابة معادلات التكوين والاحتراق</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li><strong>معادلة التكوين:</strong> عناصر أولية (حالتها القياسية) → 1 مول من المادة</li>
+          <li>مثال CH₃COOH(l): 2C(s) + 2H₂(g) + O₂(g) → CH₃COOH(l)</li>
+          <li>مثال NH₄Cl(s): ½N₂(g) + 2H₂(g) + ½Cl₂(g) → NH₄Cl(s)</li>
+          <li><strong>معادلة الاحتراق القياسي:</strong> المادة + O₂ → CO₂(g) + H₂O(l) مع ΔH° < 0</li>
+          <li>⚠️ إنتاج CO بدل CO₂ = ليست احتراقاً قياسياً</li>
+          <li>⚠️ احتراق أكثر من مول = ليست حرارة تكوين قياسية</li>
+        </ul></div>
+      </div>
+
+      <div class="branch">
+        <div class="btoggle" onclick="tog(this)">
+          <div class="bicon">💡</div>
+          <span class="blabel">نقاط مهمة وأخطاء شائعة</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="bcontent"><ul class="leaves">
+          <li>⚠️ ΔH°f للغازات الأحادية الذرية مثل O₂, H₂, N₂ = صفر دائماً</li>
+          <li>⚠️ ΔH°f للمادة الصلبة ≠ ΔH°f للمادة السائلة (الحالة الفيزيائية تغير القيمة)</li>
+          <li>⚠️ عند قلب معادلة الاحتراق: ΔH تُقلب إشارتها</li>
+          <li>نترات الأمونيوم NH₄NO₃ → ماص (كمادات باردة) لأنه يمتص الحرارة عند ذوبانه</li>
+          <li>أسيتات الصوديوم CH₃COONa → طارد (كمادات ساخنة) لأنه يطلق الحرارة عند التجمد</li>
+          <li>إشارة ΔH على مخطط الطاقة: تنازلي = طارد (ΔH−) | تصاعدي = ماص (ΔH+)</li>
+        </ul></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function tog(btn) { btn.parentElement.classList.toggle('open'); }
+document.querySelectorAll('.branch:first-of-type .btoggle').forEach(b => {
+  b.parentElement.classList.add('open');
+});
+</script>
+</body>
+</html>
